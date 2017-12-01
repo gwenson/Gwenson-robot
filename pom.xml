@@ -23,27 +23,23 @@
      
     <modules>
         <module>common</module>
-		<module>search-view</module>	
+		<module>search-robot</module>	
     </modules>
     
      
     <dependencyManagement>
     	<dependencies>
     	
-    		<dependency>  
+    		 <dependency>  
 		        <groupId>com.gwenson</groupId>  
-		        <artifactId>search-view</artifactId>  
-		        <version>${project.version}</version> 
-		     </dependency> 
+		        <artifactId>common</artifactId>  
+		     </dependency>
     		<dependency>  
 		        <groupId>com.gwenson</groupId>  
 		        <artifactId>search-robot</artifactId>  
 		        <version>${project.version}</version>  
 		     </dependency>
-		     <dependency>  
-		        <groupId>com.gwenson</groupId>  
-		        <artifactId>common</artifactId>  
-		     </dependency>
+		    
 		     <dependency>
 		    	<groupId>org.slf4j</groupId>
 		    	<artifactId>slf4j-api</artifactId>

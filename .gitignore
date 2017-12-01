@@ -3,3 +3,4 @@
 common/target/
 search-robot/.classpath
 search-robot/.gitignore
+search-robot/target/

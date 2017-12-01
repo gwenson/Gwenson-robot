@@ -5,7 +5,7 @@
 
 ### 我的项目应用部署地址
 
-​	[Gwenson 个人爬虫搜索引擎](http:\\www.gwenson.com)
+​	[Gwenson 个人爬虫搜索引擎](http://www.gwenson.com)
 
 
 
@@ -102,7 +102,6 @@
    #分表数，用来生成tableId
    database.table.num=64
 
-
    #设置爬虫的优先级别，广度优先为:wide;深度度优先为:depth
    gwensong.robot.search.scope=depth
    #配置白名单列表
@@ -114,7 +113,6 @@
    gwenson.robot.user.username=root
    #web controller启动爬虫密码
    gwenson.robot.user.password=123456
-
    ```
 
    ​	application-prod.properties或application-dev.properties是区分启动的环境配置，和application.properties里的spring.profiles.active=prod对应：

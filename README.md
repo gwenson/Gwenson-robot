@@ -3,17 +3,23 @@
 
 [TOC]
 
+
+
 ### 我的项目应用部署地址
 
 ​	[Gwenson 个人爬虫搜索引擎](http://www.gwenson.com)
 
 
 
+### 该项目都用到了哪些技术？
 
+​	spring boot、spring data redis、jsoup、word等等
 
-### 工程项目的介绍
+​	
 
-1. common模块项目是一个公共工具类依赖包模块。
+### 工程项目结构的介绍
+
+1. #### common模块项目是一个公共工具类依赖包模块。
 
    结构介绍：
 
@@ -34,7 +40,7 @@
 
    ​
 
-2. search-robot模块项目是一个基于spring boot框架的爬虫机器人模块。
+2. #### search-robot模块项目是一个基于spring boot框架的爬虫机器人模块。
 
    结构介绍：
 
@@ -144,6 +150,7 @@
    spring.redis.timeout=100000
 
    ```
+
 
 
 

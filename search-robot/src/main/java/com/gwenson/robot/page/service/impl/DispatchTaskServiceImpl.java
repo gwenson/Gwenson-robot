@@ -118,7 +118,7 @@ public class DispatchTaskServiceImpl implements DispatchTaskService{
 			if(OnAndOffCache.isSearchStartedCache()){
 				log.debug("#################进入循环#####################");
 				//判断深度锁
-				if(!depthLockDao.isLock()){
+				if(!depthLockDao.isLock()&&(depthQueueUrlDao.size()==null||depthQueueUrlDao.size()==0)){
 					log.debug("#################进入广度#####################");
 					final String wideUrl = wideQueueUrlDao.brPopQueue();
 					log.debug("#################"+wideUrl+"#####################");

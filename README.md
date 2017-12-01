@@ -151,7 +151,7 @@
 
 ```markdown
 1、安装redis
-(因为该项目是居于redis作为内容储存，值得注意的是：爬取到的内容是以消息方式推送到redis的list的，如果想把内储存到Mysql数据库请看。)
+(因为该项目是居于redis作为内容储存，值得注意的是：爬取到的内容是以消息方式推送到redis的list的，如果想把内储存到Mysql数据库请看:/search-robot/src/main/java/com/gwenson/robot/page/service/impl/DispatchTaskServiceImpl.java  的427行。)
 
 2、在项目src/main/resources下的application-prod.properties里的spring.redis.host= 
 spring.redis.password= 

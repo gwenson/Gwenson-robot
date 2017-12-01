@@ -1,0 +1,5 @@
+.project
+.settings/
+common/target/
+search-robot/.classpath
+search-robot/.gitignore

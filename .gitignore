@@ -6,3 +6,6 @@ search-robot/.gitignore
 search-robot/target/
 search-view/src/main/java/com/gwenson/search/controller/TestController.java
 search-view/src/test/
+common/.classpath
+search-view/.classpath
+search-view/.gitignore

@@ -23,7 +23,8 @@
      
     <modules>
         <module>common</module>
-		<module>search-robot</module>	
+		<module>search-robot</module>
+		<module>search-view</module>	
     </modules>
     
      

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwenson.search.dao.SearchBlogMapper" >
+  <resultMap id="BaseResultMap" type="com.gwenson.common.model.SearchBlog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="tableId" property="tableId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="postTime" property="posttime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="LONGVARCHAR" />
+    <result column="text" property="text" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tableId, title, url, postTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    description, keywords, text
+  </sql>
+ 	<!-- <select id="findByIds" resultType="BaseResultMap">
+ 	select * from search_blog_${tableId} where id in
+ 		<foreach item="ids" collection="array" open="(" separator="," close=")">
+			#{ids}
+		</foreach>
+ 	</select> -->
+ 	<select id="findByIdAndTableId"  resultMap="BaseResultMap">
+ 	select * from search_blog_${tableId} where id =#{id}
+ 	</select>
+  <insert id="insert" parameterType="com.gwenson.common.model.SearchBlog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into search_blog_${tableId} 
+    		<trim prefix="(" suffix=")" suffixOverrides=",">  
+                <if test="tableId != null">  
+                    `tableId`,  
+                </if>  
+                <if test="title != null ">  
+                    `title`,  
+                </if>  
+                <if test="url != null">  
+                    `url`,  
+                </if> 
+                <if test="postTime != null">  
+                    `postTime`,  
+                </if> 
+                <if test="description != null ">  
+                    `description`,  
+                </if> 
+                <if test="keywords != null ">  
+                    `keywords`,  
+                </if> 
+                <if test="text != null ">  
+                    `text`,
+                </if>  
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">  
+                <if test="tableId != null">  
+                    #{tableId,jdbcType=INTEGER},  
+                </if>  
+                <if test="title != null">  
+                   #{title,jdbcType=VARCHAR}, 
+                </if>  
+                <if test="url != null">  
+                  #{url,jdbcType=VARCHAR},
+                </if>  
+                <if test="postTime != null">  
+                    #{postTime,jdbcType=TIMESTAMP},
+                </if>  
+                <if test="description != null">  
+                    #{description,jdbcType=LONGVARCHAR},
+                </if>  
+                <if test="keywords != null">  
+                   #{keywords,jdbcType=LONGVARCHAR},
+                </if>  
+                <if test="text != null">  
+                  #{text,jdbcType=LONGVARCHAR}
+                </if>  
+            </trim> 
+  </insert>
+</mapper>

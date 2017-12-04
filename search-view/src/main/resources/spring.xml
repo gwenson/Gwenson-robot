@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:cache="http://www.springframework.org/schema/cache" 
+     xmlns:task="http://www.springframework.org/schema/task"
+     xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.1.xsd
+     http://www.springframework.org/schema/aop 
+     http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+     http://www.springframework.org/schema/cache   
+     http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
+     http://www.springframework.org/schema/task
+     http://www.springframework.org/schema/task/spring-task-4.1.xsd
+     http://www.springframework.org/schema/data/elasticsearch
+     http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd">
+
+
+	<!-- 加载配置 -->
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath:jdbc.properties" />
+	
+	
+	<context:component-scan base-package="com.gwenson">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!-- 启用aop注解 -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath*:spring/**.xml" />
+	
+	
+	<!-- 支持异步方法执行 -->
+	<task:annotation-driven executor="asyncExecutor" />  
+	<task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10" />  
+	<!-- 处理crawler的线程池 -->  
+	<task:executor id="crawlerExecutor" pool-size="15-100" queue-capacity="35" keep-alive="5"/>  
+	<!-- 处理insert的线程池 -->  
+	<task:executor id="insertExecutor" pool-size="15-30" queue-capacity="35" keep-alive="5"/>
+	
+	
+	<!-- 在service -->
+	<bean id="configProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>	
+	
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>  
+	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcache"/>
+	
+	
+	
+	
+ 	<elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300" cluster-name="my-application" />
+ 	<!-- <elasticsearch:node-client id="esNodeClient" local="true"  /> -->
+ 	
+ 	<!-- 注入clent对象值-->
+ 	<bean name="elasticsearchTemplate"
+		class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+		<constructor-arg  ref="client" />
+	</bean> 
+	<!-- <elasticsearch:repositories base-package="com.gwenson.search.dao" /> -->
+	
+	<import resource="classpath*:redis.xml"/>	
+	
+</beans>

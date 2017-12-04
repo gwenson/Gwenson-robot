@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Gwenson-爬虫搜索引擎</title>
+  <meta name="keywords" content="格温逊,格温逊网，GWENSON,gwenson,gwenson.com,爬虫,搜索引擎,中文搜索引擎,爬虫搜索引擎,爬虫中文搜索引擎,格温逊首页">
+  <meta name="description" content="个人中文搜索引擎、致力于让网民更便捷地获取信息，找到所求,可以瞬间找到相关的搜索结果。">
+  <link rel="shortcut icon" href="/conf/dist/img/g.png"/>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="/conf/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/conf/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/conf/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/conf/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/conf/dist/css/skins/_all-skins.min.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="/conf/plugins/html5shiv.min.js"></script>
+  <script src="/conf/plugins/respond.min.js"></script>
+  <![endif]-->
+</head>
+<style>
+.search{
+	cursor: pointer;
+}
+</style>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-black-light layout-top-nav">
+<div class="wrapper">
+
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+      <script type="text/javascript">
+		var sogou_ad_id=922342;
+		var sogou_ad_height=15;
+		var sogou_ad_width=468;
+		</script>
+		<script type='text/javascript' src='http://images.sohu.com/cs/jsfile/js/c.js'></script>
+      
+      <!--   <div class="navbar-header">
+          <a href="index.html" class="navbar-brand"><b>Gwenson</b></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div> -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+       <!--  <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+		  
+            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Link</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+			
+          </ul>
+		  
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
+            </div>
+          </form>
+		   
+        </div>-->
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+         <!--  <ul class="nav navbar-nav">
+            Messages: style can be found in dropdown.less
+            <li class="dropdown messages-menu">
+              Menu toggle button
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-envelope-o"></i>
+                <span class="label label-success">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 0 messages</li>
+                <li>
+                  inner menu: contains the messages
+                  <ul class="menu">
+                    <li>start message
+                      <a href="#">
+                        <div class="pull-left">
+                          User Image
+                          <img src="/conf/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        </div>
+                        Message title and timestamp
+                        <h4>
+                          Support Team
+                          <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                        </h4>
+                        The message
+                        <p>Why not buy a new awesome theme?</p>
+                      </a>
+                    </li>
+                    end message
+                  </ul>
+                  /.menu
+                </li>
+                <li class="footer"><a href="#">See All Messages</a></li>
+              </ul>
+            </li>
+            /.messages-menu
+
+            Notifications Menu
+            <li class="dropdown notifications-menu">
+              Menu toggle button
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 0 notifications</li>
+                <li>
+                  Inner Menu: contains the notifications
+                  <ul class="menu">
+                    <li>start notification
+                      <a href="#">
+                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      </a>
+                    </li>
+                    end notification
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">View all</a></li>
+              </ul>
+            </li>
+            Tasks Menu
+            <li class="dropdown tasks-menu">
+              Menu Toggle Button
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-flag-o"></i>
+                <span class="label label-danger">0</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="header">You have 0 tasks</li>
+                <li>
+                  Inner menu: contains the tasks
+                  <ul class="menu">
+                    <li>Task item
+                      <a href="#">
+                        Task title and progress text
+                        <h3>
+                          Design some buttons
+                          <small class="pull-right">20%</small>
+                        </h3>
+                        The progress bar
+                        <div class="progress xs">
+                          Change the css width attribute to simulate progress
+                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only">20% Complete</span>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    end task item
+                  </ul>
+                </li>
+                <li class="footer">
+                  <a href="#">View all tasks</a>
+                </li>
+              </ul>
+            </li>
+            User Account Menu
+            <li class="dropdown user user-menu">
+              Menu Toggle Button
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                The user image in the navbar
+                <img src="/conf/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                hidden-xs hides the username on small devices so only the image appears.
+                <span class="hidden-xs">Gwenson wu</span>
+              </a>
+              <ul class="dropdown-menu">
+                The user image in the menu
+                <li class="user-header">
+                  <img src="/conf/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                  <p>
+                    Gwenson wu - Web Developer
+                    <small>Member since Nov. 2012</small>
+                  </p>
+                </li>
+                Menu Body
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Followers</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Sales</a>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Friends</a>
+                    </div>
+                  </div>
+                  /.row
+                </li>
+                Menu Footer
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+         --></div>
+        <!-- /.navbar-custom-menu -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Full Width Column -->
+  <div class="layout-boxed content-wrapper">
+	
+		<div class="" >
+		<!-- style="float: none;display: block;margin-left: 35%;margin-right: auto;" -->
+			<div class="gwensonImg"  >
+			 <img src="/conf/dist/img/gwenson3.png" class="img-responsive ">
+			</div>
+		</div>
+		<div class="" >
+		<!-- style="float: none;display: block;margin-left: 31%;margin-right: 25%;" -->
+			<div class="gwensonSearch img-responsive" >
+				<div class="input-group input-group-lg">
+					<input type="text" id="search_text" class="form-control">
+					<a class="input-group-addon search" href="javascript:toSearch1()"><i class="fa fa-search"></i></a>
+				</div>
+			</div>
+		</div>
+	
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="pull-right hidden-xs">
+        	<!-- <b>Version</b> 1.0.0 -->
+        	<strong>Copyright &copy; 2016-2018 <a href="http://www.gwenson.com">Gwenson</a>.</strong> All rights
+      reserved.
+      </div>
+      	粤ICP备17048235号-1&nbsp;&nbsp;&nbsp;&nbsp;
+      	<!-- <strong>Copyright &copy; 2016-2018 <a href="http://www.gwenson.com">Gwenson</a>.</strong> All rights
+      reserved. -->
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/conf/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/conf/bootstrap/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="/conf/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/conf/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/conf/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/conf/dist/js/demo.js"></script>
+<script src="/conf/searchJS/config.js"></script>
+<script>
+
+var width1=$(".content-wrapper").width();
+var height1=$(".content-wrapper").height();
+var widthImg=$(".gwensonImg").find("img").width();
+var heightImg=$(".gwensonImg").height();
+var leftImg=(((width1-widthImg)/2)/width1)*100;
+var temp=(-11/width1)*100;
+var w=490;
+	if(w>width1){
+		w=width1-18;
+	}
+var width=(w/width1)*100;
+var b=isPc();
+var temp2=0;
+if(b){
+	temp2=1;
+}
+$(".gwensonImg").css({"position":"relative","margin-left":leftImg+"%"});
+$(".gwensonSearch").css({"position":"relative","margin-left":(leftImg-temp+temp2)+"%","width":width+"%"});
+
+window.onresize=function(){
+	var width1=$(".content-wrapper").width();
+	var height1=$(".content-wrapper").height();
+	var widthImg=$(".gwensonImg").find("img").width();
+	var heightImg=$(".gwensonImg").height();
+	var leftImg=(((width1-widthImg)/2)/width1)*100;
+	var temp=(-11/width1)*100;
+	var w=490;
+		if(w>width1){
+			w=width1-18;
+		}
+	var width=(w/width1)*100;
+	var b=isPc();
+	var temp2=0;
+	if(b){
+		temp2=1;
+	}
+	$(".gwensonImg").css({"position":"relative","margin-left":leftImg+"%"});
+	$(".gwensonSearch").css({"position":"relative","margin-left":(leftImg-temp+temp2)+"%","width":width+"%"});
+}
+	
+console.log(prod.localhost);
+function isPc() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+    	return false;
+    } else {
+        return true;
+    }
+}
+
+	
+
+	function toSearch1(){
+		var text=$("#search_text").val();
+		/* sessionStorage.searchText=text;
+		sessionStorage.currPage=1;
+		sessionStorage.findCount=true;
+		sessionStorage.count=0; */
+		window.location.href=prod.localhost+"/search?words="+encodeURI(encodeURI(text));
+	}
+	
+	
+	$("#search_text").keyup(function(){
+        if(event.keyCode == 13){
+        	toSearch1();
+        }
+    });
+</script>
+</body>
+</html>

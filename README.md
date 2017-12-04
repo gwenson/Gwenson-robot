@@ -3,8 +3,6 @@
 
 [TOC]
 
-
-
 ### 我的项目应用部署地址
 
 ​	[Gwenson 个人爬虫搜索引擎](http://www.gwenson.com)
@@ -13,15 +11,15 @@
 
 ### 该项目都用到了哪些技术？
 
-​	spring boot、spring data redis、jsoup、word等等
+​	spring boot、spring data redis、jsoup、word、mybatis、spring data elasticsearch、spring mvc、bootstrap、JSP等等
 
 ​	
 
 ### 工程项目结构的介绍
 
-1. #### common模块项目是一个公共工具类依赖包模块。
+####  common 模块项目是一个公共工具类依赖包模块。
 
-   结构介绍：
+   项目结构介绍：
 
    ```
    common
@@ -38,13 +36,14 @@
        
    ```
 
-   ​
+   
 
-2. #### search-robot模块项目是一个基于spring boot框架的爬虫机器人模块。
+####  search-robot模块项目是一个基于spring boot框架的爬虫机器人模块。
 
-   结构介绍：
 
-   ```wiki
+   项目结构介绍：
+
+```wiki
    search-robot
    └─src
        └─main
@@ -79,7 +78,7 @@
               ├─blacklist.txt			//黑名单
               ├─whitelist.txt			//白名单
               └─logback.xml			//logback日志配置
-   ```
+```
 
    ​
 
@@ -87,7 +86,7 @@
 
    ​	application.properties是项目启动的必要配置文件：
 
-   ```properties
+```properties
    #项目监听端口
    server.port=8081
    #项目路径
@@ -119,11 +118,11 @@
    gwenson.robot.user.username=root
    #web controller启动爬虫密码
    gwenson.robot.user.password=123456
-   ```
+```
 
-   ​	application-prod.properties或application-dev.properties是区分启动的环境配置，和application.properties里的spring.profiles.active=prod对应：
+   	application-prod.properties或application-dev.properties是区分启动的环境配置，和application.properties里的spring.profiles.active=prod对应：
 
-   ```properties
+```properties
 
    profile = prod_envrimont
 
@@ -148,17 +147,83 @@
    spring.redis.pool.max-active=-1  
    spring.redis.pool.max-wait=-1
    spring.redis.timeout=100000
-
-   ```
-
+```
 
 
 
-### 怎么使用?
+#### search-view模块是一个基于spring mvc的搜索引擎web门户应用
 
-```markdown
+项目结构介绍:
+
+```wiki
+src
+├─main
+│  ├─java
+│  │  └─com
+│  │      └─gwenson
+│  │          └─search
+│  │              ├─controller
+│  │              ├─dao
+│  │              │  ├─elasticsearch
+│  │              │  └─xml
+│  │              ├─filter
+│  │              ├─interceptor
+│  │              ├─listener
+│  │              ├─model
+│  │              ├─service
+│  │              │  └─imp
+│  │              ├─servlet
+│  │              └─utils
+│  ├─resources
+│  │  └─spring //spring datasource位置
+│  └─webapp
+│      └─WEB-INF
+│          ├─static
+│          │  ├─conf
+│          │  └─html  //首页 index.html
+└──────────└─views   //结果页 search.jsp
+```
+
+​
+
+ search-view的src/main/resouces下的文件介绍
+
+​	jdbc.properties是search-view的mysql数据库和redis连接用户和密码存放文件：
+
+```properties
+#mysql的数据库连接配置
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://127.0.0.1:3306/search?useUnicode=true&amp;characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+jdbc.username=root
+jdbc.password=123456
+jdbc.maxActive=20  
+jdbc.maxIdle=10
+jdbc.maxWait=4000
+
+#Redis settings
+#Redis的配置
+redis.host=127.0.0.1
+redis.port=6379
+redis.password=
+redis.maxIdle=300
+redis.minIdle=10
+redis.maxActive=600
+redis.maxWait=1000
+redis.testOnBorrow=true
+redis.testOnReturn=true
+redis.timeout=1000000
+
+```
+
+
+
+
+  ### 怎么使用?
+
+####  (一) 部署启动search-robot
+
+ ```
 1、安装redis
-(因为该项目是居于redis作为内容储存，值得注意的是：爬取到的内容是以消息方式推送到redis的list的，如果想把内储存到Mysql数据库请看:/search-robot/src/main/java/com/gwenson/robot/page/service/impl/DispatchTaskServiceImpl.java  的427行。)
 
 2、在项目src/main/resources下的application-prod.properties里的spring.redis.host= 
 spring.redis.password= 
@@ -174,7 +239,49 @@ java -jar /gwenson/app/search-robot/search-robot-0.0.1-SNAPSHOT.ja
 http://localhost:8081/start/search?username=root&password=123456
 或
 curl "http://localhost:8081/start/search?username=root&password=123456"
+ ```
+
+
+
+#### (二) 部署启动search-view
+
+
+1、安装MYSQL
+​	然后在src/main/resouces下的jdbc.properties的mysql的数据库连接配置配置上你的地址属性
+
+2、安装elasticsearch-2.3.4版本
+​	安装word分词插件[点击这里查看安装方法](https://my.oschina.net/u/2532423/blog/1552640)
+
+​	在src/main/resouces下的spring.xml配置elasticsearch的服务地址:
+
 ```
+<elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300" cluster-name="my-application" />
+```
+
+127.0.0.1:9300改为你的服务地址和端口
+
+3、编译项目
+
+​	在Gwenson-robot根目录下执行
+
+```
+$ mvn clean install package -Dmaven.test.skip=true
+```
+
+3、安装tomcat
+
+​	修改tomcat下的conf下的server.xml的
+
+```
+ <Context docBase="D:\eclipse workspace\Gwenson\search-view\target\search-view" path="/" reloadable="true" /></Host>
+```
+
+​	docBase改为你的项目地址
+
+​	启动tomcat下的bin下的startup.sh
+
+​	
+
 
 
 

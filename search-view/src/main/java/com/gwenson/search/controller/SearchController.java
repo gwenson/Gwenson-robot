@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +23,7 @@ import com.gwenson.search.service.imp.SearchPageService;
 
 @RestController
 public class SearchController {
-
+	private static Logger log=(Logger) LoggerFactory.getLogger(SearchController.class);
 	@Autowired
 	private SearchPageService searchPageService;
 	@Autowired
@@ -35,6 +37,7 @@ public class SearchController {
 		ModelAndView mv = new ModelAndView("search");
 		if(words!=null&&!"".equals(words)){
 			words =java.net.URLDecoder.decode(words, "UTF-8");
+			log.debug("words={}",words);
 			Page<SearchBlog> page = new Page<>();
 			page.setPageNo(currPage);
 			Map<String,Object> map = new HashMap<>();
@@ -42,12 +45,13 @@ public class SearchController {
 			page.setParamsMap(map);
 			try {
 				Page<SearchBlog> findByPage  = searchPageService.search(page);
+				log.debug("Page={}",findByPage);
 				List<String> adverts = advertService.findByCode();
 				mv.addObject("page", findByPage);
 				mv.addObject("advert", adverts);
 				mv.addObject("words", words);
 			} catch (Exception e) {
-				
+				log.error("查询出错", e);
 			}
 		}else{
 			return new ModelAndView("redirect:/");

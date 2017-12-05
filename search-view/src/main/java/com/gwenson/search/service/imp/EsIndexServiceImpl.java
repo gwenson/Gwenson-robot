@@ -50,7 +50,9 @@ public class EsIndexServiceImpl implements EsIndexService {
 	public Page<EsIndex> search(com.gwenson.search.model.Page<SearchBlog> page) {
 		String condition = (String) page.getParamsMap().get("condition");
 		if (null != condition && !"".equals(condition)) {
-			SearchQuery citySearchQuery = getSearchQuery(page.getPageNo(), page.getPageSize(), condition);
+			String[] split = condition.split(" ");
+			log.debug("condition={}", split.toString());
+			SearchQuery citySearchQuery = getSearchQuery(page.getPageNo(), page.getPageSize(), split);
 			Page<EsIndex> page2 = elasticsearchTemplate.queryForPage(citySearchQuery, EsIndex.class);
 			return page2;
 		}
@@ -77,14 +79,18 @@ public class EsIndexServiceImpl implements EsIndexService {
 	 * @return
 	 */
 	private SearchQuery getSearchQuery(Integer pageNumber, Integer pageSize, String... searchContent) {
-		FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery()
-				.add(QueryBuilders.matchPhraseQuery("title", searchContent),
-						ScoreFunctionBuilders.weightFactorFunction(1000))
-				.add(QueryBuilders.matchPhraseQuery("description", searchContent),
-						ScoreFunctionBuilders.weightFactorFunction(100))
-				.add(QueryBuilders.matchPhraseQuery("keywords", searchContent),
-						ScoreFunctionBuilders.weightFactorFunction(100))
-				.scoreMode(SCORE_MODE_SUM).setMinScore(MIN_SCORE);
+		FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery();
+				for(String search:searchContent){
+					functionScoreQueryBuilder
+					.add(QueryBuilders.matchPhraseQuery("title", search),
+							ScoreFunctionBuilders.weightFactorFunction(1000))
+					.add(QueryBuilders.matchPhraseQuery("description", search),
+							ScoreFunctionBuilders.weightFactorFunction(100))
+					.add(QueryBuilders.matchPhraseQuery("keywords", search),
+							ScoreFunctionBuilders.weightFactorFunction(100))
+					.scoreMode(SCORE_MODE_SUM).setMinScore(MIN_SCORE);
+				}
+				
 		// 分页参数
 		Pageable pageable = new PageRequest(pageNumber - 1, pageSize);
 		return new NativeSearchQueryBuilder().withQuery(functionScoreQueryBuilder).withPageable(pageable).build();

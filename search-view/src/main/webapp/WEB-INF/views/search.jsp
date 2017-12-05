@@ -314,29 +314,45 @@
 			<div id="contentHtml">
 				<c:if test="${ page != null }">
 				
-					<c:if test="${ page.result !=null && fn:length(page.result)>0  }">
-					
-					<c:forEach items="${ page.result }" var="p" >
-					
-						<c:if test="${p != null }">
+				
+					<c:choose>
+						<c:when test="${ page.result !=null && fn:length(page.result)>0  }">
 						
+							<c:forEach items="${ page.result }" var="p" >
+					
+								<c:if test="${p != null }">
+								
+									<div class="callout callout-info">
+										<div class="searchItem"> 
+											 <h3 class="searchItemTitle"> <a target="_blank" href="${p.url }"> ${ p.title } </a> </h3> 
+											 <span class="searchCon"> ${p.text } </span>
+											 <div class="searchItemInfo"> 
+											 </div> 
+											 <div class="searchItemInfo"> 
+											 	<a class="searchURL" href="${p.url }" >${p.url }</a> 
+										 	 </div> 
+										</div>
+									</div>
+									
+								</c:if>
+					
+							</c:forEach>
+						
+						</c:when>
+						
+						<c:otherwise>
 							<div class="callout callout-info">
 								<div class="searchItem"> 
-									 <h3 class="searchItemTitle"> <a target="_blank" href="${p.url }"> ${ p.title } </a> </h3> 
-									 <span class="searchCon"> ${p.text } </span>
+									 <h3 class="searchItemTitle"> </h3> 
+									 <span class="searchCon"> 很抱歉，没有找到你想要的内容。可以试试<a href="https://wwww.baidu.com">百度一下</a>或许有你想要的内容。 </span>
 									 <div class="searchItemInfo"> 
 									 </div> 
 									 <div class="searchItemInfo"> 
-									 	<a class="searchURL" href="${p.url }" >${p.url }</a> 
 								 	 </div> 
 								</div>
 							</div>
-							
-						</c:if>
-					
-					</c:forEach>
-					
-					</c:if>
+						</c:otherwise>
+					</c:choose>
 					
 					<div>
  						<div style="float: left;margin-top: 26px;font-size: 10pt;">

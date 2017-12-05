@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gwenson.common.dao.redis.IdenticTextDao;
 import com.gwenson.common.dao.redis.IdenticalUrlDao;
 import com.gwenson.common.dao.redis.QueueSearchBlogDao;
@@ -45,7 +46,7 @@ public class SearchPageService{
 		org.springframework.data.domain.Page<EsIndex> page2 = esIndexService.search(page);
 		String searchContent = (String) page.getParamsMap().get("condition");
 		List<String> wordAnalyzeSearchTerms = esIndexService.getWordAnalyzeSearchTerms(searchContent);
-		
+		log.debug("list<String>={}",wordAnalyzeSearchTerms);
 		page.setTotalCount(page2.getTotalElements());
 		page.setTotalPage(page2.getTotalPages());
 		List<EsIndex> content = page2.getContent();

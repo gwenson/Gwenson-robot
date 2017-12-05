@@ -1,5 +1,5 @@
 # Gwenson-robot爬虫机器人
-**这是一个使用JAVA语言开发的爬虫机器人，利用redis的list实现匀速爬取目标，并实现了url去重和目标内容去重。其中目标内容去重是先利用word分词然后再利用simhash算法得到一个SimHashCode值，再利用抽屉原理判断海明距离从而得到相似度。注意：使用JDK1.8**
+**这是一个使用JAVA语言开发的可分布式的爬虫机器人，利用redis的list实现匀速爬取目标，并实现了url去重和目标内容去重。其中目标内容去重是先利用word分词然后再利用simhash算法得到一个SimHashCode值，再利用抽屉原理判断海明距离从而得到相似度。注意：使用JDK1.8**
 
 [TOC]
 
@@ -217,25 +217,53 @@ redis.timeout=1000000
 
 
 
-
   ### 怎么使用?
 
-####  (一) 部署启动search-robot
+#### (一) 安装maven，编译maven项目
+
+在Gwenson-robot目录下执行mvn命令:
+
+```
+$ mvn clean install package -Dmaven.test.skip=true
+```
+
+成功会在最好出现该字样：
+
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] search-parent ...................................... SUCCESS [  0.400 s]
+[INFO] common ............................................. SUCCESS [  2.891 s]
+[INFO] search-robot ....................................... SUCCESS [  3.299 s]
+[INFO] search-view ........................................ SUCCESS [ 15.059 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 22.235 s
+[INFO] Finished at: 2017-12-05T17:19:21+08:00
+[INFO] Final Memory: 49M/345M
+[INFO] ------------------------------------------------------------------------
+```
+
+
+
+
+
+####  (二) 部署启动search-robot
 
  ```
+
 1、安装redis
 
 2、在项目src/main/resources下的application-prod.properties里的spring.redis.host= 
 spring.redis.password= 
 配置你redis地址和密码
-
-3、在项目的根目录下运行 mvn clean install package -Dmaven.test.skip=true
-  用maven编译好jar包
   
-4、执行jar运行命令启动
+3、执行jar运行命令启动
 java -jar /gwenson/app/search-robot/search-robot-0.0.1-SNAPSHOT.ja
 
-5、在浏览器地址执行下面url启动爬虫
+4、在浏览器地址执行下面url启动爬虫
 http://localhost:8081/start/search?username=root&password=123456
 或
 curl "http://localhost:8081/start/search?username=root&password=123456"
@@ -243,7 +271,7 @@ curl "http://localhost:8081/start/search?username=root&password=123456"
 
 
 
-#### (二) 部署启动search-view
+#### (三) 部署启动search-view
 
 
 1、安装MYSQL
@@ -260,20 +288,14 @@ curl "http://localhost:8081/start/search?username=root&password=123456"
 
 127.0.0.1:9300改为你的服务地址和端口
 
-3、编译项目
+3、解压\Gwenson-robot\search-view\target\search-view.war到你指定的目录如：d:\Gwenson-robot\search-view
 
-​	在Gwenson-robot根目录下执行
-
-```
-$ mvn clean install package -Dmaven.test.skip=true
-```
-
-3、安装tomcat
+4、安装tomcat
 
 ​	修改tomcat下的conf下的server.xml的
 
 ```
- <Context docBase="D:\eclipse workspace\Gwenson\search-view\target\search-view" path="/" reloadable="true" /></Host>
+ <Context docBase="d:\Gwenson-robot\search-view" path="/" reloadable="true" /></Host>
 ```
 
 ​	docBase改为你的项目地址

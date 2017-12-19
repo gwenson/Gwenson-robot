@@ -74,13 +74,14 @@ public class DispatchTaskServiceImpl implements DispatchTaskService{
 	@Autowired
 	private DatabaseConfig databaseConfig;
 	
+	
 	static{
 		try {
 			Document doc = ConnectUtil.connectUrl("https://www.oschina.net/blog");
 			if(doc!=null){
 				String text = doc.body().text();
 				List<Word> seg = WordSegmenter.seg(text, SegmentationAlgorithm.BidirectionalMinimumMatching);
-				log.info("热部署分词>>>"+seg.toString());
+				log.info("热部署分词>>>{}",seg.toString());
 			}
 		} catch (IOException e) {
 			log.error("热部署分词错误", e);
@@ -155,6 +156,15 @@ public class DispatchTaskServiceImpl implements DispatchTaskService{
 					isCleanDepthLock();
 				}
 				
+				//防止应用停掉浪费线程池的queue资源
+				while (true) {
+					
+					if(fixedThreadPool.getQueue().size()==0){
+						log.debug("########退出队列清空等待###########");
+						break;
+					}
+					
+				}
 				
 				
 			}
@@ -281,6 +291,16 @@ public class DispatchTaskServiceImpl implements DispatchTaskService{
 				} catch (InterruptedException e) {
 					// 
 				}
+				
+				//防止应用停掉浪费线程池的queue资源
+				while (true) {
+					
+					if(fixedThreadPool.getQueue().size()==0){
+						break;
+					}
+					
+				}
+				
 			}
 		}
 	}
